@@ -46,8 +46,12 @@ app.delete('/items/:id', function(req, res) {
 		}
 	}
 	if (found) {
-		var deleted = storage.items.splice(index, 1);
-		res.status(200).json(deleted);
+		var deletedItem = storage.items.splice(index, 1);
+		var deletedObj = {
+			name: deletedItem[0].name,
+			id: deletedItem[0].id
+		}
+		res.status(200).json(deletedObj);
 	} else {
 		var error = {
 			"message": "Id does not exist",
@@ -85,3 +89,6 @@ app.put('/items/:id', jsonParser, function(req, res) {
 });
 
 app.listen(process.env.PORT || 8080);
+
+exports.app = app;
+exports.storage = storage;
